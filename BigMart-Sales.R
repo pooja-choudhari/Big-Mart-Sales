@@ -82,3 +82,52 @@ plot8 = ggplot(combi %>% group_by(Outlet_Type) %>% summarise(Count = n())) +
   theme(axis.text.x = element_text(size = 8.5))
 
 plot_grid(plot7, plot8, ncol = 2)  
+
+# Bivariate Analysis
+#Exctraxcting the train dataset for Combi
+train = combi[1:nrow(train)]
+
+#exploring target variable and independent numeric variable using scatter plot
+
+#plot for Item_Weight and Item_outlet_Sales
+plot9 = ggplot(train) + geom_point(aes(Item_Weight, Item_Outlet_Sales), colour = "violet", alpha = 0.3) +     
+   theme(axis.title = element_text(size = 8.5))
+
+#plot for Item_Visibility and Item_outlet_Sales
+plot10 = ggplot(train) +  geom_point(aes(Item_Visibility, Item_Outlet_Sales), colour = "violet", alpha = 0.3) +      
+  theme(axis.title = element_text(size = 8.5))
+
+#plot for Item_MRP and Item_outlet_Sales
+plot11 = ggplot(train) +  geom_point(aes(Item_MRP, Item_Outlet_Sales), colour = "violet", alpha = 0.3) +     
+  theme(axis.title = element_text(size = 8.5))
+
+#plotting plot9.plot10, plot11 into grid
+second_row_2 = plot_grid(plot10, plot11, ncol = 2) 
+plot_grid(plot9, second_row_2, nrow = 2)
+
+#Lexploring the target variable and the independent categorical variable
+# Item_Type vs Item_Outlet_Sales
+plot12 = ggplot(train) + geom_violin(aes(Item_Type, Item_Outlet_Sales), fill = "lightblue") +  
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), axis.text = element_text(size = 6),  
+        axis.title = element_text(size = 8.5))
+
+# Item_Fat_Content vs Item_Outlet_Sales 
+plot13 = ggplot(train) + geom_violin(aes(Item_Fat_Content, Item_Outlet_Sales), fill = "lightblue") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),axis.text = element_text(size = 8), 
+        axis.title = element_text(size = 8.5))
+
+# Outlet_Identifier vs Item_Outlet_Sales 
+plot14 = ggplot(train) + geom_violin(aes(Outlet_Identifier, Item_Outlet_Sales), fill = "lightblue") +     
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),axis.text = element_text(size = 8),
+        axis.title = element_text(size = 8.5))
+
+second_row_3 = plot_grid(plot13, plot14, ncol = 2)
+plot_grid(plot12, second_row_3, ncol = 1)
+
+#In Univariate analysis we came acroos the column in the Outlet_size which was blank.
+#Let's check its distrubution
+ggplot(train) + geom_violin(aes(Outlet_Size, Item_Outlet_Sales), fill = "lightgreen")
+
+plot15 = ggplot(train) + geom_violin(aes(Outlet_Location_Type, Item_Outlet_Sales), fill = "magenta") 
+plot16 = ggplot(train) + geom_violin(aes(Outlet_Type, Item_Outlet_Sales), fill = "magenta") 
+plot_grid(plot15, plot16, ncol = 1)
